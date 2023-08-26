@@ -1,0 +1,16 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Tomcat 9.0\\lib\\commons-fileupload-1.4.jar",
+        "c:\\Tomcat 9.0\\lib\\commons-io-2.11.0.jar",
+        "c:\\Tomcat 9.0\\lib\\gson-2.8.6.jar",
+        "c:\\Tomcat 9.0\\lib\\jasypt-1.9.3.jar",
+        "c:\\Tomcat 9.0\\lib\\javax.json-1.1.2.jar",
+        "c:\\Tomcat 9.0\\lib\\javax.json-api-1.1.2.jar",
+        "c:\\Tomcat 9.0\\lib\\javax.mail.jar",
+        "c:\\Tomcat 9.0\\lib\\jsp-api.jar",
+        "c:\\Tomcat 9.0\\lib\\jstl.jar",
+        "c:\\Tomcat 9.0\\lib\\servlet-api.jar",
+        "c:\\Tomcat 9.0\\lib\\twilio-9.0.1.jar"
+    ]
+}
