@@ -233,43 +233,81 @@
 
     <div class="container">
         <!-- collect all reviews -->
-        <div>
-            <form action="review.do?blogId=${blog.blogId}" method="post">
-                <div class="bg-light p-2">
-                    <input type="hidden" id="blogId" name="blogId" value="8">
-                    <div class="d-flex flex-row align-items-start"><img class="rounded-circle" src="static/images/review.jpg" width="40">
-                        <textarea class="form-control ml-1 shadow-none textarea" cols="10" rows="5" id="description" name="description" placeholder="Add a comment.."></textarea>
-                    </div>
-                    <div class="mt-2 text-right">
-                        <button class="btn btn-primary btn-sm shadow-none" type="submit" id="post_btn">Post comment</button>
-                    </div>
+        <c:choose>
+            <c:when test="${user == null}">
+                <h6 style="text-align: center;">your are not logged in, please login to starting reviewing! or if you want to comment</h6>
+            </c:when>
+            <c:otherwise>
+                <div>
+                    <form action="review.do?count=1&blogId=${blog.blogId}" method="post">
+                        <div class="bg-light p-2">
+                            <input type="hidden" id="blogId" name="blogId" value="8">
+                            <div class="d-flex flex-row align-items-start"><img class="rounded-circle" src="static/images/review.jpg" width="40">
+                                <textarea class="form-control ml-1 shadow-none textarea" cols="10" rows="3" id="description" name="description" placeholder="Add a comment.."></textarea>
+                            </div>
+                            <div class="mt-2 text-right">
+                                <button class="btn btn-primary btn-sm shadow-none" type="submit" id="post_btn">Post comment</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </div>
-        <!--  -->
+            </c:otherwise>
+        </c:choose>
         
         <!-- review section starts -->
-        <div class="card-header">Comments</div>
         <c:forEach var="arv" items="${allReviews}">
-            <div class="card-header"></div>
-            <div class="card">
+            <div class="card" style="margin: 10px 20px;">
+                <div class="card-header">
+                    <img src="download_image.do?user_id=${arv.user.userId}&count=3" data-toggle="modal" data-target="#profile-modal" style="border-radius: 50%; max-height: 40px;" class="round img-fluid mt-1"></img>
+                    <!-- <img src="static/images/techblog.png" height="30px"> -->
+                    <span">&nbsp;   ${arv.user.name}</span>
+                    <span class="stars ml-5">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                    </span>
+                </div>
                 <div class="card-body">
-                    <img src="static/images/techblog.png" height="40px">${arv.user.name}
-                    <div class="stars ml-5" >
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                    </div>
                     <blockquote class="blockquote mb-0">
                         <p>${arv.review}</p>
                     </blockquote>
                 </div>
             </div>
         </c:forEach>
-        <!--review section ends-->
     </div>
+
+    <br>
+
+    <p style="margin-left: 25px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: larger; font-weight: 200;">
+        Similar Products
+    </p>
+
+    <hr>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col" id="hv">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <c:forEach var="blog" items="${subsequentBlogs}">
+                    <div class="card md-4 mb-3 d-inline-block" style="max-width: 700px; border: 1px solid black;">
+                        <div class="card" style="width: 21rem;">
+                            <img src="download_image.do?blog_id=${blog.blogId}&count=1" onclick="getBlogInfo('${blog.blogId}')" class="card-img-top" style="height: 200px; border: solid 1px black; margin: 3px3px" >
+                            <div class="card-body" style="height: 230px">
+                                <h5 class="card-title text-center" style="text-decoration:underline;" onclick="getBlogInfo('${blog.blogId}')">${blog.name}</h5>
+                                <hr>
+                                <h6 class="card-title">${blog.smallDesc}</h6>
+                                <div class="text-left">
+                                    <a href="#" onclick="func2('${blog.blogId}')" class="btn primary-background text-white">read more...</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </c:forEach>
+            </div>
+        </div>
+    </div>
+    <hr>
 
     <br>
     <br>
@@ -277,6 +315,10 @@
     <%@ include file="footer.jsp" %>
 
     <script>
+        function getBlogInfo(productId) {
+            window.location.href = "product_info.do?productId="+productId;
+        }
+
         const blog_id_ = document.querySelector('#blog_id_');
         const all_images_box = document.querySelector('#all_images_box');
         
@@ -309,10 +351,11 @@
 
         allImageReq();
 
-
         const fetchBlogReviews = async () => {
             let resp = await fetch('blog_reviews.do?blogId='+blog_id_.value);
             let result = await resp.json();
+
+            console.log(result);
             
             return result;
         }

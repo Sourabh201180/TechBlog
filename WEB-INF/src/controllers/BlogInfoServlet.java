@@ -21,6 +21,8 @@ public class BlogInfoServlet extends HttpServlet {
         Integer blogId = Integer.parseInt(request.getParameter("blogId"));
 
         Blog blog = Blog.getBlogInfo(blogId);
+
+        ArrayList<Blog> subsequentBlogs = Blog.getAllSubsequentBlogs(blog.getSubCategory().getSubCategoryId());
         
         String nextPage = "index.jsp";
             
@@ -30,6 +32,7 @@ public class BlogInfoServlet extends HttpServlet {
 
         ArrayList<Review> allReviews = Review.collectAllBlogReviews(blogId);
         session.setAttribute("allReviews", allReviews);
+        session.setAttribute("subsequentBlogs", subsequentBlogs);
 
         request.getRequestDispatcher(nextPage).forward(request, response);
     }

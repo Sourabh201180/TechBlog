@@ -16,29 +16,34 @@ public class ReviewServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         User user = (User)session.getAttribute("user");
-        
-        Integer blogId = Integer.parseInt(request.getParameter("blogId"));
+
+        String nextPage = "index.jsp";
         
         if(user != null) {
-            Integer userId = user.getUserId();
-
-            
+            Integer count = Integer.parseInt(request.getParameter("count"));
             String description = request.getParameter("description");
-
+            
+            Integer blogId = Integer.parseInt(request.getParameter("blogId"));
+            
             Review review = new Review();
+            
+            if(count == 1) {    // save
+                review.addReview(user.getUserId(), blogId, description);
+                nextPage = "blog_info.do?blogId="+blogId;
+            } else if(count == 2) {   // update
+                Integer reviewId = Integer.parseInt(request.getParameter("review_id"));
+                review.setReview(description);
+                review.updateReview(reviewId);
+                nextPage = "user_reviews.do";
+            }
+            
+            // session.setAttribute("review", review);
+            // session.setAttribute("blog_id", blogId);
 
-            // review.setUser(new User(userId));
-            // review.setBlog(new Blog(blogId));
-            // review.setReview(description);
-
-            review.addReview(user.getUserId(), blogId, description);
-
-            session.setAttribute("review", review);
-            session.setAttribute("blog_id", blogId);
-
-            response.sendRedirect("blog_info.do?blogId="+blogId);
         } else {
-            response.sendRedirect("blog_info.jsp?blogId="+blogId);
+
         }
+
+        response.sendRedirect(nextPage);
     }
 }

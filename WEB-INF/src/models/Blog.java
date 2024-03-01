@@ -29,6 +29,11 @@ public class Blog {
         this.name = name;
     }
 
+    public Blog(Integer blogId, String name) {
+        this.blogId = blogId;
+        this.name = name;
+    }
+
     public Blog(String name, String smallDesc, String longDesc, User user, SubCategory subCategory, Status status) {
         this.name = name;
         this.smallDesc = smallDesc;
@@ -247,6 +252,40 @@ public class Blog {
         }
 
         return blog;
+    }
+
+    public static ArrayList<Blog> getAllSubsequentBlogs(Integer subCategoryId) {
+        ArrayList<Blog> list = new ArrayList<>();
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/techblogdb?user=root&password=1523");
+
+            String query = "select blog_id, name, small_desc, long_desc from blogs where sub_category_id=?";
+
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, subCategoryId);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()) {
+                Blog blog = new Blog();
+
+                blog.blogId = rs.getInt(1);
+                blog.name = rs.getString(2);
+                blog.smallDesc = rs.getString(3);
+                blog.longDesc = rs.getString(4);
+                // product.subCategory = new SubCategory(rs.getInt(5));
+
+                list.add(blog);
+            }
+
+            con.close();
+        } catch(SQLException|ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 
     public Integer getBlogId() {

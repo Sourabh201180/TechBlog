@@ -88,7 +88,8 @@
                       <a href="sub_blog_cards.do?scId=1" class="btn primary-background text-white">Read more...</a>
                     </div>
                 </div>
-            </div><div class="col-md-4">
+            </div>
+            <div class="col-md-4">
                 <div class="card">
                     <img class="card-img-top" style="height: 170px;" src="static/images/cards/C++.jpg" alt="Card image cap">
                     <div class="card-body">
@@ -97,7 +98,8 @@
                       <a href="#" class="btn primary-background text-white">Read more...</a>
                     </div>
                 </div>
-            </div><div class="col-md-4">
+            </div>
+            <div class="col-md-4">
                 <div class="card">
                     <img class="card-img-top" style="height: 170px;" src="static/images/cards/kotlin.jpg" alt="Card image cap">
                     <div class="card-body">
@@ -108,6 +110,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
@@ -118,7 +121,8 @@
                       <a href="#" class="btn primary-background text-white">Read more...</a>
                     </div>
                 </div>
-            </div><div class="col-md-4">
+            </div>
+            <div class="col-md-4">
                 <div class="card">
                     <img class="card-img-top" style="height: 170px;" src="static/images/cards/javascript.jpg" alt="Card image cap">
                     <div class="card-body">
@@ -127,7 +131,8 @@
                       <a href="sub_blog_cards.do?scId=4" class="btn primary-background text-white">Read more...</a>
                     </div>
                 </div>
-            </div><div class="col-md-4">
+            </div>
+            <div class="col-md-4">
                 <div class="card">
                     <img class="card-img-top" style="height: 170px;" src="static/images/cards/html.jpg" alt="Card image cap">
                     <div class="card-body">
@@ -141,34 +146,41 @@
     </div>
 
     <br>
-    <br>
-    <hr>
-
-    <div class=" mt-4 container-fluid">
-        <div class="row">
-            <div class="col" id="hv">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <c:forEach var="blog" items="${blogs}">
-                    <div class="card md-4 mb-3 d-inline-block" style="max-width: 700px; border: 1px solid black;">
-                        <div class="card" style="width: 21rem;">
-                            <img src="download_image.do?blog_id=${blog.blogId}&count=1" onclick="func2('${blog.blogId}')" class="card-img-top" style="height: 200px; border: solid 1px black; margin: 3px3px" >
-                            <div class="card-body" style="height: 230px">
-                                <h5 class="card-title text-center" style="text-decoration:underline;" onclick="func2('${blog.blogId}')">${blog.name}</h5>
-                                <hr>
-                                <h6 class="card-title">${blog.smallDesc}</h6>
-                                <div class="text-left">
-                                    <a href="#" onclick="func2('${blog.blogId}')" class="btn primary-background text-white">read more...</a>
+    
+    <c:choose>
+        <c:when test="${blogs != null}">
+            <div class="mt-4 container-fluid">
+                <hr>
+                <h4 style="text-align: center;">Blogs</h4>
+                <hr>
+                <div class="row">
+                    <div class="col" id="hv">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <c:forEach var="blog" items="${blogs}">
+                            <div class="card md-4 mb-3 d-inline-block" style="max-width: 700px; border: 1px solid black;">
+                                <div class="card" style="width: 21rem;">
+                                    <img src="download_image.do?blog_id=${blog.blogId}&count=1" onclick="func2('${blog.blogId}')" class="card-img-top" style="height: 200px; border: solid 1px black; margin: 3px3px" >
+                                    <div class="card-body" style="height: 230px">
+                                        <h5 class="card-title text-center" style="text-decoration:underline;" onclick="func2('${blog.blogId}')">${blog.name}</h5>
+                                        <hr>
+                                        <h6 class="card-title">${blog.smallDesc}</h6>
+                                        <div class="text-left">
+                                            <a href="#" onclick="func2('${blog.blogId}')" class="btn primary-background text-white">read more...</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </c:forEach>
                     </div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </c:forEach>
+                </div>
             </div>
-        </div>
-    </div>
+        </c:when>
+        <c:otherwise>
+            <!-- write now No blogs are available!!! -->
+        </c:otherwise>
+    </c:choose>
 
-    <hr>
     <br>
     
     <c:import url="footer.jsp" />

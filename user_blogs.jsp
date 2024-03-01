@@ -122,7 +122,7 @@
                                 <div class="text-left">
                                     <a href="#" onclick="func2('${blog.blogId}')">read more...</a>
                                     <hr>
-                                    <a href="delete_blog.do?blog_id=${blog.blogId}" class="text-right btn btn-primary btn-sm">Delete</a>
+                                    <a href="delete_blog_review.do?count=1&blog_id=${blog.blogId}" class="text-right btn btn-primary btn-sm">Delete</a>
                                     &nbsp;
                                     <button class="btn btn-primary btn-sm" onclick="func4('${blog.blogId}')">Edit</button>
                                 </div>
@@ -223,7 +223,6 @@
                 }).catch((err) => {
                     console.log(err);
                 });
-                
                 
                 svBlog.classList.replace('d-block','d-none');
                 upBlog.classList.replace('d-none','d-block');

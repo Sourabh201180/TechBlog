@@ -225,7 +225,7 @@
         <c:otherwise>
           <button onclick="funcUserBlog()" class="btn btn-outline-light">My Blogs</button>
         </c:otherwise>
-    </c:choose>
+      </c:choose>
     </div>
 </nav>
 

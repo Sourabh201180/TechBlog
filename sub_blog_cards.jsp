@@ -29,6 +29,7 @@
                         <div class="card" style="width: 21rem;">
                             <img src="download_image.do?blog_id=${blog.blogId}&count=1" class="card-img-top" style="height: 200px; border: solid 1px black; margin: 3px3px" >
                             <div class="card-body" style="height: 230px">
+                                <h6 class="card-title" style="text-align: center;">${blog.name}</h6>
                                 <hr>
                                 <h6 class="card-title">${blog.smallDesc}</h6>
                                 <div class="text-left">
